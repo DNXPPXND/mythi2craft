@@ -1,76 +1,62 @@
 'use client';
 
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useState, useEffect } from 'react';
 import Navbar from "@/components/Navbar";
-import Swal from 'sweetalert2';
+import Link from 'next/link';
+import Image from 'next/image';
 
-interface User {
+interface Product {
   id: number;
-  username: string;
-  email: string;
-  role: string;
+  name: string;
+  description: string;
+  price: string;
+  image_url: string;
+  category: string;
+  is_new_collection: number;
 }
 
 export default function HomePage() {
-  const router = useRouter();
+  const [products, setProducts] = useState<Product[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
+  useEffect(() => {
+    async function fetchProducts() {
+      try {
+        setIsLoading(true);
+        const res = await fetch('/api/products');
+        const data = await res.json();
 
+        const newArrivals = data.filter(
+          (p: Product) => p.is_new_collection === 1
+        );
 
-  const [user, setUser] = useState<User | null>(() => {
-    if (typeof window !== 'undefined') {
-      const storedUser = localStorage.getItem('user');
-      return storedUser ? JSON.parse(storedUser) : null;
+        setProducts(newArrivals);
+      } catch (error) {
+        console.error("Fetch error:", error);
+      } finally {
+        setIsLoading(false);
+      }
     }
-    return null;
-  });
 
-  const handleLogout = async () => {
-    const result = await Swal.fire({
-      title: 'Leaving so soon?',
-      text: 'You are about to sign out from ArtToy Shop.',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#d33',
-      cancelButtonColor: '#6b7280',
-      confirmButtonText: 'Yes, log me out',
-      cancelButtonText: 'Stay logged in'
-    });
-
-
-    if (result.isConfirmed) {
-      localStorage.removeItem('user');
-      setUser(null);
-
-      await Swal.fire({
-        title: 'See you again!',
-        text: 'You have been signed out successfully.',
-        icon: 'success',
-        timer: 1500,
-        showConfirmButton: false,
-      });
-
-
-      router.push('/login');
-    }
-  };
-
+    fetchProducts();
+  }, []);
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col">
-      <Navbar user={user} onLogout={handleLogout} />
-      <main className="flex-1 flex items-center justify-center">
-        <h2 className="text-3xl font-bold text-gray-800">
-          Welcome to Mythic Craft
-        </h2>
+    <div className="min-h-screen bg-white flex flex-col font-sans">
+      <Navbar />
+
+      <main>
+        <div className="py-20 text-center"><h1 className="text-4xl font-black text-gray-800">New Arrivals</h1>
+          <p className="text-gray-400 mt-2">Discover our latest art toys collection!</p>
+        </div>
+
       </main>
-      {/* --- Footer --- */}
-      <footer className="border-t border-slate-100 bg-white py-12">
-        <div className="max-w-7xl mx-auto px-6 text-center text-slate-400 text-sm">
+
+      <footer className="border-t border-slate-50 py-12">
+        <div className="max-w-7xl mx-auto px-6 text-center text-slate-400 text-[10px] uppercase font-bold">
           © 2026 Mythic Craft. All rights reserved.
         </div>
       </footer>
-
     </div>
   );
 }

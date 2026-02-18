@@ -5,7 +5,7 @@ import Navbar from "@/components/Navbar";
 export default function AboutPage() {
   return (
    <>
-   <Navbar user={null} onLogout={() => {}} />
+   <Navbar />
    <div className="min-h-screen bg-gray-50 px-6 py-20">
         
       <div className="max-w-5xl mx-auto">
