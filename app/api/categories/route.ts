@@ -3,19 +3,11 @@ import { pool } from '@/app/lib/db';
 
 export async function GET() {
   try {
+    // ดึงข้อมูล series_id และ series_name จาก Database
     const [rows] = await pool.query(`
-      SELECT 
-        p.id, 
-        p.name, 
-        p.description, 
-        p.price, 
-        p.currency,
-        p.stock_status,
-        s.series_name AS series,
-        pi.image_url 
-      FROM products p
-      LEFT JOIN series s ON p.series_id = s.series_id
-      LEFT JOIN product_images pi ON p.id = pi.product_id AND pi.is_main = 1
+      SELECT series_id as id, series_name as name 
+      FROM series 
+      ORDER BY series_name ASC
     `);
 
     return NextResponse.json(rows);

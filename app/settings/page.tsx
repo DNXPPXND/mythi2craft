@@ -54,7 +54,7 @@ export default function SettingsPage() {
     if (result.isConfirmed) {
         Cookies.remove('user');
         Cookies.remove('user_role');
-        router.push('/login');
+        router.push('/');
         router.refresh();
     }
 };
@@ -120,7 +120,7 @@ export default function SettingsPage() {
                                 </div>
                                 <span className="font-bold text-red-600">Logout from Realm</span>
                             </div>
-                            <span className="text-red-200 group-hover:text-red-400 transition-colors group-hover:translate-x-1 transition-transform">→</span>
+                            <span className="text-red-200 group-hover:text-red-400 group-hover:translate-x-1 transition-transform">→</span>
                         </button>
                     </div>
                 </div>

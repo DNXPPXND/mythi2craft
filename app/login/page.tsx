@@ -65,7 +65,7 @@ export default function LoginPage() {
             <div className="w-full max-w-md bg-white p-10 rounded-[32px] shadow-sm border border-slate-100">
                 <div className="text-center mb-8">
                     <div className="w-12 h-12 bg-indigo-600 rounded-2xl mx-auto mb-4 flex items-center justify-center shadow-indigo-100 shadow-lg">
-                        <span className="text-white font-bold text-xl">M</span>
+                        <a href="/ "><span className="text-white font-bold text-xl">M</span> </a>
                     </div>
                     <h2 className="text-2xl font-bold text-slate-800">Welcome Back</h2>
                     <p className="text-slate-400 text-sm mt-1">Please enter your details</p>

@@ -23,9 +23,9 @@ export default function RegisterPage() {
         e.preventDefault();
 
         if (formData.password !== formData.confirmPassword) {
-            return Swal.fire({ 
-                icon: 'error', 
-                title: 'Password Mismatch', 
+            return Swal.fire({
+                icon: 'error',
+                title: 'Password Mismatch',
                 text: 'Passwords do not match.',
                 confirmButtonColor: '#3b82f6'
             });
@@ -117,6 +117,8 @@ export default function RegisterPage() {
                                 name="password"
                                 type="password"
                                 required
+                                minLength={6}
+                                maxLength={10}
                                 className="w-full bg-slate-50 border-none rounded-2xl px-4 py-3.5 text-slate-700 placeholder:text-slate-300 focus:ring-2 focus:ring-blue-100 outline-none transition-all"
                                 placeholder="••••••••"
                                 onChange={handleChange}
@@ -129,6 +131,8 @@ export default function RegisterPage() {
                                 name="confirmPassword"
                                 type="password"
                                 required
+                                minLength={6}
+                                maxLength={10}
                                 className="w-full bg-slate-50 border-none rounded-2xl px-4 py-3.5 text-slate-700 placeholder:text-slate-300 focus:ring-2 focus:ring-blue-100 outline-none transition-all"
                                 placeholder="••••••••"
                                 onChange={handleChange}

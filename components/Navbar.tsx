@@ -38,7 +38,7 @@ export default function Navbar() {
         : user ? [...baseLinks, { name: 'Settings', href: '/settings' }] : baseLinks;
 
     return (
-        <nav className="sticky top-0 z-[100] bg-white border-b border-gray-100 px-6 py-4">
+        <nav className="sticky top-0 z-100 bg-white border-b border-gray-100 px-6 py-4">
             <div className="max-w-7xl mx-auto flex justify-between items-center">
 
                 {/* Logo Section */}
@@ -51,7 +51,7 @@ export default function Navbar() {
                 {/* Mobile Toggle Button */}
                 <button
                     onClick={() => setIsOpen(!isOpen)}
-                    className="md:hidden z-[110] relative text-2xl focus:outline-none"
+                    className="md:hidden z-110 relative text-2xl focus:outline-none"
                 >
                     {isOpen ? (
                         <span className="text-white text-3xl">✕</span>
@@ -64,12 +64,10 @@ export default function Navbar() {
                     )}
                 </button>
 
-                {/* ✅ Redesigned Mobile Menu: Simple & High Reliability */}
-                <div className={`fixed inset-0 bg-slate-950 z-[90] flex flex-col p-8 pt-28 transition-all duration-300 ${isOpen ? 'opacity-100 visible' : 'opacity-0 invisible'
+                {/* ✅ Mobile Menu */}
+                <div className={`fixed inset-0 bg-slate-950 z-90 flex flex-col p-8 pt-28 transition-all duration-300 ${isOpen ? 'opacity-100 visible' : 'opacity-0 invisible'
                     } md:hidden`}>
-
-                    {/* ส่วนของ Link: ใช้ flex-grow เพื่อดันส่วนล่างลงไป */}
-                    <div className="flex-grow">
+                    <div className="grow">
                         <ul className="flex flex-col gap-6">
                             {navLinks.map((link) => (
                                 <li key={link.href} onClick={() => setIsOpen(false)}>
@@ -80,8 +78,7 @@ export default function Navbar() {
                             ))}
                         </ul>
                     </div>
-
-                    {/* ส่วนท้าย: ข้อมูลผู้ใช้และปุ่ม Logout แบบเรียบง่ายที่สุด */}
+                    
                     <div className="mt-auto border-t border-white/10 pt-6">
                         {user ? (
                             <div className="space-y-4">
@@ -107,16 +104,40 @@ export default function Navbar() {
                     </div>
                 </div>
 
-                {/* Desktop Nav */}
-                <ul className="hidden md:flex gap-8">
-                    {navLinks.map((link) => (
-                        <li key={link.href}>
-                            <Link href={link.href} className="text-sm font-bold text-gray-600 hover:text-indigo-600">
-                                {link.name}
-                            </Link>
-                        </li>
-                    ))}
-                </ul>
+                {/* ✅ Desktop Nav */}
+                <div className="hidden md:flex items-center gap-8">
+                    <ul className="flex gap-8">
+                        {navLinks.map((link) => (
+                            <li key={link.href}>
+                                <Link href={link.href} className="text-sm font-bold text-gray-600 hover:text-indigo-600 transition-colors">
+                                    {link.name}
+                                </Link>
+                            </li>
+                        ))}
+                    </ul>
+
+                    {/* ✅ Login Button with Arrow Animation (Only shown if not logged in) */}
+                    {!user && (
+                        <Link 
+                            href="/login" 
+                            className="group flex items-center gap-2 bg-indigo-600 text-white px-5 py-2 rounded-full text-sm font-bold hover:bg-indigo-700 transition-all duration-300"
+                        >
+                            <span>Login</span>
+                            <svg 
+                                xmlns="http://www.w3.org/2000/svg" 
+                                fill="none" 
+                                viewBox="0 0 24 24" 
+                                strokeWidth={2.5} 
+                                stroke="currentColor" 
+                                className="w-4 h-4 transform transition-transform duration-300 group-hover:translate-x-1"
+                            >
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                            </svg>
+                        </Link>
+                    )}
+
+                    
+                </div>
             </div>
         </nav>
     );
